@@ -12,11 +12,11 @@ app.use(express.json())
 app.use(express.static('public'))
 
 const sqlconnection = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    port: 3306,
-    password: '',
-    database: 'blog'
+    host: process.env.HOST,
+    user: process.env.USER,
+    port: process.env.PORT,
+    password: process.env.PASSWORD,
+    database: process.env.DBNAME
 });
 
 sqlconnection.connect((err) => {
