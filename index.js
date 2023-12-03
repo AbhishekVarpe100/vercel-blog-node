@@ -12,11 +12,11 @@ app.use(express.json())
 app.use(express.static('public'))
 
 const sqlconnection = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    port: process.env.PORT,
-    password: process.env.PASSWORD,
-    database: process.env.DBNAME
+    host: 'b8fed1dcvs81j7jddizh-mysql.services.clever-cloud.com',
+    user: 'uwg5gvlf2siiixm5',
+    port: 3306,
+    password: 'PezlxRV49czAorFmz2iv',
+    database: 'b8fed1dcvs81j7jddizh'
 });
 
 sqlconnection.connect((err) => {
