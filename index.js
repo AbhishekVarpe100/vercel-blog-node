@@ -64,11 +64,11 @@ app.post('/login', (req, res) => {
     const { name, password } = req.body;
     try {
         sqlconnection.query('select name,password from register where name=? and password=?', [name, password], (err, result) => {
-            if (result) {
-                res.status(200).json('find');
+            if (result.length == 0) {
+                res.status(500).json('not_find');
             }
             else {
-                res.status(500).json('not_find');
+                res.status(200).json('find');
             }
         })
     } catch (error) {
