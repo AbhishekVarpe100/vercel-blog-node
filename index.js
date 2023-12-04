@@ -70,7 +70,7 @@ app.post('/login', (req, res) => {
                         res.status(200).json('find');
                     }
                     else{
-                        res.status(500).json('password_wrong')
+                        res.json('password_wrong')
                     }
                 })
                 
