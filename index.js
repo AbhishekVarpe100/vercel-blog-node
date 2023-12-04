@@ -182,11 +182,11 @@ app.post('/getblog/:id',(req,res)=>{
 
 
 //update blog
-app.post("/update", upload.single('file'), (req, res) => {
+app.post("/update", (req, res) => {
     const blogname = req.body.blogname;
     const description = req.body.description;
     const id=req.body.id;
-    sqlconnection.query('update createblog set blogname=?, description=?  where id=?',[blogname,description,file],(err,result)=>{
+    sqlconnection.query('update createblog set blogname=?, description=?  where id=?',[blogname,description,id],(err,result)=>{
         if(err){
             res.status(500).send("Internal server error")
         }
