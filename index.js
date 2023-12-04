@@ -67,7 +67,7 @@ app.post('/login', (req, res) => {
             if (result.length > 0) {
                 res.status(200).json('find');
             }
-            else {
+            else if(!result) {
                 res.status(500).json('not_find');
             }
         })
