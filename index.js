@@ -65,10 +65,18 @@ app.post('/login', (req, res) => {
     try {
         sqlconnection.query('select * from register where name=?', [name], (err, result) => {
             if (result.length > 0) {
-                res.status(200).json('find');
+                sqlconnection.query('select * from register where password=?',[password],(err,myResult)=>{
+                    if(myResult.length>0){
+                        res.status(200).json('find');
+                    }
+                    else{
+                        res.status(500).json('password_wrong')
+                    }
+                })
+                
             }
             else{
-                res.json('not_find');
+                res.json('wrong_name');
             }
         })
     } catch (error) {
