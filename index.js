@@ -93,12 +93,11 @@ const upload = multer({
 
 
 
-app.post("/addblog", upload.single('file'), (req, res) => {
+app.post("/addblog", (req, res) => {
     const username = req.body.username;
     const blogname = req.body.blogname;
     const description = req.body.description;
-    const file = req.file.filename;
-    sqlconnection.query('insert into createblog(username,blogname,description,image) values(?,?,?,?)',[username,blogname,description,file],(err,result)=>{
+    sqlconnection.query('insert into createblog(username,blogname,description) values(?,?,?)',[username,blogname,description],(err,result)=>{
         if(err){
             res.status(500).send("Internal server error");
         }
@@ -186,9 +185,8 @@ app.post('/getblog/:id',(req,res)=>{
 app.post("/update", upload.single('file'), (req, res) => {
     const blogname = req.body.blogname;
     const description = req.body.description;
-    const file = req.file.filename;
     const id=req.body.id;
-    sqlconnection.query('update createblog set blogname=?, description=?, image=? where id=?',[blogname,description,file,id],(err,result)=>{
+    sqlconnection.query('update createblog set blogname=?, description=?  where id=?',[blogname,description,file],(err,result)=>{
         if(err){
             res.status(500).send("Internal server error")
         }
