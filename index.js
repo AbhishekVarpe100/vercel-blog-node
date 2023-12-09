@@ -109,7 +109,7 @@ app.post("/addblog", (req, res) => {
         if(err){
             res.status(500).send("Internal server error");
         }
-        else{
+        else{ 
             res.status(200).send('added');
         }
     })
@@ -202,6 +202,55 @@ app.post("/update", (req, res) => {
             res.status(200).send('updated');
         }
     })
+})
+
+
+app.post('/like',(req,res)=>{
+    const {username,userName,blogname}=req.body;
+    sqlconnection.query('select * from likes where username=? and creator=? and blogname=?',[username,userName,blogname],(err,result)=>{
+        
+            if(result.length==0){
+                sqlconnection.query("insert into likes(username,creator,blogname,likecount) values(?,?,?,?)",[username,userName,blogname,1]);
+            }
+            else if(result[0].likecount==1){
+                sqlconnection.query('update likes set likecount=? where username=? and creator=? and blogname=?',[0,username,userName,blogname])
+            }
+            else if(result[0].likecount==0){
+                sqlconnection.query('update likes set likecount=? where username=? and creator=? and blogname=?',[1,username,userName,blogname])
+            }
+
+            if(err){
+                console.log(err)
+            }
+        
+    })
+    
+})
+
+
+app.post('/getlikes',(req,res)=>{
+
+    const {userName,blogname}=req.body;
+    try {
+
+        sqlconnection.query('select  sum(likecount) as like_count from likes where creator=? and blogname=?',[userName,blogname], (err, results) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                const likeCount = results[0].like_count;
+
+                res.json({likeCount});
+                // res.json({userName,blogname,likeCount});
+                // console.log({likeCount})
+            }
+        })
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+// console.log(userName,blogname);
 })
 
 
